@@ -1,0 +1,32 @@
+{
+  "name": "spotify-api-wrapper",
+  "version": "1.0.0",
+  "description": "Spotify Wrapper API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack --mode development",
+    "build": "webpack --mode production",
+    "start": "webpack-dev-server --mdoe development --open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vitorjsls30/spotify-api-wrapper.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vitorjsls30/spotify-api-wrapper/issues"
+  },
+  "homepage": "https://github.com/vitorjsls30/spotify-api-wrapper#readme",
+  "devDependencies": {
+    "@babel/core": "^7.5.4",
+    "@babel/preset-env": "^7.5.4",
+    "babel-loader": "^8.0.6",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "webpack": "^4.35.3",
+    "webpack-cli": "^3.3.5",
+    "webpack-dev-server": "^3.7.2"
+  }
+}
