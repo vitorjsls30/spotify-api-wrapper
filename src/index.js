@@ -1,2 +1,9 @@
-const name = 'Vitor';
-console.log(`YO ${name}!! Nice to see ya!! ;D`);
+import album from './album';
+
+class spotifyApiWrapper {
+  constructor() {
+    this.album = album;
+  }
+}
+
+export default spotifyApiWrapper;
