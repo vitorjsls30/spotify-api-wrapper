@@ -1,5 +1,3 @@
-import fetch from 'node-fetch';
-
 const request = (url, token) => {
   const headers = {
     headers: {
