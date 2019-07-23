@@ -70,6 +70,24 @@ describe('Spotidy API Wrapper', () => {
         })
     });
 
-  })
+  });
+
+  describe('Search', () => {
+    it('should have search method defined', () => {
+      expect(sut.search).toBeDefined();
+    });
+
+    it('should search a given artist', (done) => {
+      const query = 'mock-artist';
+      const type = 'artist';
+      sut.search.query(query, type)
+        .then(data => {
+          expect(data).toEqual('mocked-data');
+          expect(global.fetch).toHaveBeenCalledWith(`https://api.spotify.com/v1/search?q=${query}&type=${type}`, expectedHeader);
+          done();
+        })
+    });
+
+  });
 
 });
