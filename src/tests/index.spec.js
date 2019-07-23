@@ -47,7 +47,7 @@ describe('Spotidy API Wrapper', () => {
           expect(data).toEqual('mocked-data');
           expect(global.fetch).toHaveBeenCalledWith(`https://api.spotify.com/v1/album/${id}?market=ES`, expectedHeader)
           done();
-        })
+        });
     });
 
     it('should retrieve several albums by their IDs', (done) => {
@@ -67,7 +67,7 @@ describe('Spotidy API Wrapper', () => {
           expect(data).toEqual('mocked-data');
           expect(global.fetch).toHaveBeenCalledWith(`https://api.spotify.com/v1/album/${id}/tracks?market=ES`, expectedHeader);
           done();
-        })
+        });
     });
 
   });
@@ -85,7 +85,29 @@ describe('Spotidy API Wrapper', () => {
           expect(data).toEqual('mocked-data');
           expect(global.fetch).toHaveBeenCalledWith(`https://api.spotify.com/v1/search?q=${query}&type=${type}`, expectedHeader);
           done();
-        })
+        });
+    });
+
+    it('should search a given album', (done) => {
+      const query = 'mock-album';
+      const type = 'album';
+      sut.search.query(query, type)
+        .then(data => {
+          expect(data).toEqual('mocked-data');
+          expect(global.fetch).toHaveBeenCalledWith(`https://api.spotify.com/v1/search?q=${query}&type=${type}`, expectedHeader);
+          done();
+        });
+    });
+
+    it('should search a given track', (done) => {
+      const query = 'mock-track';
+      const type = 'track';
+      sut.search.query(query, type)
+        .then(data => {
+          expect(data).toEqual('mocked-data');
+          expect(global.fetch).toHaveBeenCalledWith(`https://api.spotify.com/v1/search?q=${query}&type=${type}`, expectedHeader);
+          done();
+        });
     });
 
   });
