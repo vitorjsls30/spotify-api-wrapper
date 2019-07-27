@@ -109,7 +109,11 @@ describe('Spotidy API Wrapper', () => {
           done();
         });
     });
-
   });
 
+  describe('OAUTH Session Manager', () => {
+    describe('should have authorize method defined', () => {
+      expect(sut.session.authorize).toBeDefined();
+    });
+  });
 });

@@ -1,5 +1,6 @@
 import album from './album';
 import search from './search';
+import sessionManager from './sessionManager';
 
 class spotifyApiWrapper {
   constructor(options) {
@@ -7,6 +8,7 @@ class spotifyApiWrapper {
 
     this.album = album.bind(this)();
     this.search = search.bind(this)();
+    this.session = sessionManager();
   }
 }
 

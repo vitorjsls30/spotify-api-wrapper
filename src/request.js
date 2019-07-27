@@ -1,12 +1,4 @@
-const request = (url, token) => {
-  const headers = {
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-      Authorization: `Bearer ${token}`
-    }
-  }
-
+const request = (url, headers) => {
   return fetch(url, headers)
     .then(data => data.json())
     .catch(err => console.log(`Could not retrive data from API: ${err}`));
