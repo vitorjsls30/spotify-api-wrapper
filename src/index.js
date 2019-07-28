@@ -8,7 +8,7 @@ class spotifyApiWrapper {
 
     this.album = album.bind(this)();
     this.search = search.bind(this)();
-    this.session = sessionManager();
+    this.session = new sessionManager();
   }
 }
 
