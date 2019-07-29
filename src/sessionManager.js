@@ -8,6 +8,7 @@ export default class sessionManager {
       token_type: '',
       expires_in: '',
       state: '',
+      error: ''
     }
   }
   
@@ -15,21 +16,21 @@ export default class sessionManager {
     window.location.assign(`${AUTH_URL}/authorize?${this.query_parameters}`)
   };
 
-  getUriParams() {
-    const location_hash = window.location.hash;
-    let response_parameters = '';
-    
-    if (location_hash != '') {
-      let hash_parameters = location_hash.substr(1).split('&');
+  reduceParameters(acc, curr) {
+    const splitted_param = curr.split('=');
+    let current_property = {};
+    current_property[splitted_param[0]] = splitted_param[1];
+
+    return acc = {...acc, ...current_property};
+  }
+
+  setHashParameters(hash) {
+    if (hash != '') {
+      let response_parameters = '';
+      let hash_parameters = hash.substr(1).split('&');
 
       if(hash_parameters.length > 0) {
-        response_parameters = hash_parameters.reduce((acc, curr) => {
-          const splitted_param = curr.split('=');
-          let current_property = {};
-          current_property[splitted_param[0]] = splitted_param[1];
-        
-          return acc = {...acc, ...current_property};
-        }, {});
+        response_parameters = hash_parameters.reduce(this.reduceParameters, {});
         
         this.oAuthState = { 
           access_token: response_parameters.access_token || '',
@@ -39,6 +40,19 @@ export default class sessionManager {
         }
       }
     }
+  }
+
+  getUriParams() {
+    const query_params = new URLSearchParams(window.location.search);
+    
+    if(query_params.has('error')) {
+      this.oAuthState.error = query_params.get('error');   
+    } else {
+      const location_hash = window.location.hash;
+      
+      this.setHashParameters(location_hash);
+    }
+
     return this.oAuthState;
   }
 };
