@@ -5,7 +5,7 @@ const query_parameters = `client_id=${CLIENT_ID}&response_type=token&redirect_ur
 const { location } = window;
 
 
-afterAll(() => {
+afterEach(() => {
   window.location = location;
 })
 
@@ -42,6 +42,17 @@ describe('OAUTH', () => {
     expect(sut.oAuthState.error).toEqual('access_denied');
 
     done();
-  })
+  });
+
+  it('should check token expiration time', (done) => {
+    window.location.hash = `#access_token=MOCKED-TOKEN&token_type=Bearer&expires_in=1&state=123`;
+    
+    sut.getUriParams();
+
+    setTimeout(function() {
+      expect(sut.checkTokenExpiration()).toEqual(true);
+      done();
+    }, 2000);
+  });
 
 });

@@ -7,6 +7,7 @@ export default class sessionManager {
       access_token: '',
       token_type: '',
       expires_in: '',
+      received_at: '',
       state: '',
       error: ''
     }
@@ -15,6 +16,10 @@ export default class sessionManager {
   authorize() {
     window.location.assign(`${AUTH_URL}/authorize?${this.query_parameters}`)
   };
+
+  checkTokenExpiration() {
+    return Date.now() - this.oAuthState.received_at > this.oAuthState.expires_in;
+  }
 
   reduceParameters(acc, curr) {
     const splitted_param = curr.split('=');
@@ -36,6 +41,7 @@ export default class sessionManager {
           access_token: response_parameters.access_token || '',
           token_type: response_parameters.token_type || '',
           expires_in: Number(response_parameters.expires_in) || 0,
+          received_at: Date.now(),
           state: response_parameters.state || '',
         }
       }
