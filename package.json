@@ -6,8 +6,9 @@
   "scripts": {
     "test": "./node_modules/.bin/jest",
     "test:watch": "./node_modules/.bin/jest --watch",
-    "dev": "webpack --mode development",
-    "build": "webpack --mode production",
+    "clear": "rimraf dist",
+    "build": "npm run clear && webpack --mode development",
+    "build:prod": "npm run clear && webpack --mode production",
     "start": "webpack-dev-server --mode development --open"
   },
   "repository": {
