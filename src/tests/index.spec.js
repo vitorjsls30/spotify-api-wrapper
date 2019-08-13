@@ -4,8 +4,10 @@ global.fetch = require('node-fetch');
 
 const current_token = 'BQCckdNXOiGk1EAlNFiGoonvria0lXkxkrtiWJ0VrlsN16MNAnV8qrgzn20XHA4J8hZ2l4J7uTA6ITQEJA1HYyvEesD1ua';
 const expectedHeader = {"headers": {"Accept": "application/json", "Authorization": `Bearer ${current_token}`, "Content-Type": "application/json"}};
+const clientId = 'a3909a54308c4cb780b07d305e797cb6';
+const redirectUri = 'https://my-spotify-player.com';
 
-const sut = new spotifyApiWrapper({ token: current_token });
+const sut = new spotifyApiWrapper({ token: current_token, clientId, redirectUri });
 
 const mockSuccessResponse = 'mocked-data';
 const mockJsonPromise = Promise.resolve(mockSuccessResponse);
@@ -26,6 +28,11 @@ describe('Spotidy API Wrapper', () => {
   it('should be defined', () => {
     expect(sut).toBeInstanceOf(spotifyApiWrapper);
   });
+
+  it('should have initial properties setted', () => {
+    expect(sut.clientId).toBeDefined();
+    expect(sut.redirectUri).toBeDefined();
+  })
 
   describe('Albums', () => {
     it('should have getAlbum method defined', () => {
@@ -111,6 +118,7 @@ describe('Spotidy API Wrapper', () => {
     });
   });
 
+  // TODO - ADD MORE UNIT TESTS RELATED TO SESSION MANAGER CLASS
   describe('OAUTH Session Manager', () => {
     describe('should have authorize method defined', () => {
       expect(sut.session.authorize).toBeDefined();

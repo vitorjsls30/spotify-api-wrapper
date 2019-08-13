@@ -5,10 +5,14 @@ import sessionManager from './sessionManager';
 class spotifyApiWrapper {
   constructor(options) {
     this.token = options.token;
+    this.clientId = options.clientId;
+    this.redirectUri = options.redirectUri;
 
     this.album = album.bind(this)();
     this.search = search.bind(this)();
-    this.session = new sessionManager();
+
+    const { clientId, redirectUri } = options; 
+    this.session = new sessionManager({ clientId, redirectUri });
   }
 }
 

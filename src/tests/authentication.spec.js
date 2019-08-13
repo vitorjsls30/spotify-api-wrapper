@@ -1,7 +1,9 @@
 import sessionManager from '../sessionManager';
-import { AUTH_URL, CLIENT_ID, REDIRECT_URI } from '../config';
+import { AUTH_URL } from '../config';
 
-const query_parameters = `client_id=${CLIENT_ID}&response_type=token&redirect_uri=${REDIRECT_URI}&state=123`;
+const clientId = 'a3909a54308c4cb780b07d305e797cb6';
+const redirectUri = 'https://my-spotify-player.com';
+const query_parameters = `client_id=${clientId}&response_type=token&redirect_uri=${redirectUri}&state=123`;
 const { location } = window;
 
 
@@ -9,7 +11,7 @@ afterEach(() => {
   window.location = location;
 })
 
-const sut = new sessionManager();
+const sut = new sessionManager({ clientId, redirectUri });
 
 describe('OAUTH', () => {
 

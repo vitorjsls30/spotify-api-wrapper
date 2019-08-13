@@ -1,8 +1,10 @@
 import { AUTH_URL, CLIENT_ID, REDIRECT_URI } from './config';
 
 export default class sessionManager {
-  constructor() {
-    this.query_parameters = `client_id=${CLIENT_ID}&response_type=token&redirect_uri=${REDIRECT_URI}&state=123`; 
+  constructor(options) {
+    const {clientId, redirectUri} = options;
+
+    this.query_parameters = `client_id=${clientId}&response_type=token&redirect_uri=${redirectUri}&state=123`; 
     this.oAuthState = {
       access_token: '',
       token_type: '',
