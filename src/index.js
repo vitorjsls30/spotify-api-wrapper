@@ -8,11 +8,11 @@ class spotifyApiWrapper {
     this.clientId = options.clientId;
     this.redirectUri = options.redirectUri;
 
+    this.session = sessionManager;
+    this.session.setAppInfo(options);
+
     this.album = album.bind(this)();
     this.search = search.bind(this)();
-
-    const { clientId, redirectUri } = options; 
-    this.session = new sessionManager({ clientId, redirectUri });
   }
 }
 

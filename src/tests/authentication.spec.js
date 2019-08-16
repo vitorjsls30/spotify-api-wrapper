@@ -11,9 +11,16 @@ afterEach(() => {
   window.location = location;
 })
 
-const sut = new sessionManager({ clientId, redirectUri });
+const sut = sessionManager;
 
 describe('OAUTH', () => {
+
+  it('should set the client application information', () => {
+    sut.setAppInfo({ clientId, redirectUri });
+
+    expect(sut.oAuthState.clientId).toEqual(clientId);
+    expect(sut.oAuthState.redirectUri).toEqual(redirectUri);
+  });
 
   it('should require authorize URL', (done) => {
     window.location.assign = jest.fn();
