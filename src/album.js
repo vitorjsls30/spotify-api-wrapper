@@ -1,6 +1,5 @@
 import { API_URL } from './config';
 import request from './request';
-import sessionManager from './sessionManager';
 
 function album() {
   return {
