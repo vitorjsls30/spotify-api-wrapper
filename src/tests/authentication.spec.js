@@ -6,12 +6,15 @@ const redirectUri = 'https://my-spotify-player.com';
 const query_parameters = `client_id=${clientId}&response_type=token&redirect_uri=${redirectUri}&state=123`;
 const { location } = window;
 
+let sut;
+
+beforeEach(() => {
+  sut = sessionManager.getInstance();
+});
 
 afterEach(() => {
   window.location = location;
-})
-
-const sut = sessionManager;
+});
 
 describe('OAUTH', () => {
 

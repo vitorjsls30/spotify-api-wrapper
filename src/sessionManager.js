@@ -1,5 +1,7 @@
 import { AUTH_URL, CLIENT_ID, REDIRECT_URI } from './config';
 
+let sessionManagerInstance = null;
+
 class sessionManager {
   constructor() {
     this.query_parameters = null; 
@@ -13,6 +15,13 @@ class sessionManager {
     }
   }
   
+  static getInstance() {
+    if(!sessionManagerInstance) {
+      sessionManagerInstance = new sessionManager();
+    }
+    return sessionManagerInstance;
+  }
+
   setAppInfo(options) {
     const {clientId, redirectUri} = options;
 
@@ -71,4 +80,4 @@ class sessionManager {
   }
 };
 
-export default new sessionManager();
+export default sessionManager;
