@@ -2,6 +2,7 @@ let cacheManagerInstance = null;
 
 class cacheManager{
   constructor() {
+    this.history = [];
   }
 
   static getInstance() {
@@ -9,6 +10,14 @@ class cacheManager{
       cacheManagerInstance = new cacheManager();
     }
     return cacheManagerInstance;
+  }
+
+  storeItem(search) {
+    this.history.push(search);
+  }
+
+  getHistory() {
+    return this.history;
   }
 }
 
