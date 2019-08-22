@@ -1,8 +1,13 @@
 import cacheManager from '../cacheManager';
 
-const sut = new cacheManager();
+let sut;
 
-describe(`Cache Manager`, () => {
+beforeEach(() => {
+  sut = cacheManager.getInstance();
+});
+
+fdescribe(`Cache Manager`, () => {
+
   it('should be defined', () => {
     expect(sut).toBeDefined();
   });
