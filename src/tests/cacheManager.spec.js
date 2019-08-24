@@ -39,9 +39,14 @@ fdescribe(`Cache Manager`, () => {
     sut.storeItem('item3');
     sut.storeItem('item4');
     sut.storeItem('item5');
+    sut.storeItem('item6');
+    sut.storeItem('item7');
+    sut.storeItem('item8');
+    sut.storeItem('item9');
+    sut.storeItem('item10');
 
     const history = sut.getHistory();
-    expect(history.length).toEqual(4);
+    expect(history.length).toEqual(10);
   });
 
     it('should store items in reverse to keep history order', () => {
@@ -53,6 +58,20 @@ fdescribe(`Cache Manager`, () => {
       expect(history.length).toEqual(3);
       expect(history[0]).toEqual('item3');
       expect(history[2]).toEqual('item1');
+    });
+
+    it('should store items based on the history size parameter informed', () => {
+      sut.setOption('historySize', 5);
+
+      sut.storeItem('item1');
+      sut.storeItem('item2');
+      sut.storeItem('item3');
+      sut.storeItem('item4');
+      sut.storeItem('item5');
+      sut.storeItem('item6');
+
+      const history = sut.getHistory();
+      expect(history.length).toEqual(5);
     });
 
 });

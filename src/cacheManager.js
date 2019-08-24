@@ -3,7 +3,7 @@ let cacheManagerInstance = null;
 class cacheManager{
   constructor() {
     this.history = [];
-    this.historySize = 4;
+    this.historySize = 10;
   }
 
   static getInstance() {
@@ -11,6 +11,10 @@ class cacheManager{
       cacheManagerInstance = new cacheManager();
     }
     return cacheManagerInstance;
+  }
+
+  setOption(option, value) {
+    this[option] = value;
   }
 
   storeItem(search) {
