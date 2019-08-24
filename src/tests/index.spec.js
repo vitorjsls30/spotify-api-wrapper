@@ -34,10 +34,4 @@ describe('Spotidy API Wrapper', () => {
     expect(sut.redirectUri).toBeDefined();
   })
 
-  // TODO - ADD MORE UNIT TESTS RELATED TO SESSION MANAGER CLASS
-  describe('OAUTH Session Manager', () => {
-    describe('should have authorize method defined', () => {
-      expect(sut.session.authorize).toBeDefined();
-    });
-  });
 });

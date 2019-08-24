@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/jest",
-    "test:watch": "./node_modules/.bin/jest --watch",
+    "test:watch": "./node_modules/.bin/jest --watch --verbose",
     "clear": "rimraf dist",
     "build": "npm run clear && webpack --mode development",
     "build:prod": "npm run clear && webpack --mode production",
