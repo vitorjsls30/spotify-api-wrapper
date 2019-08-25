@@ -1,7 +1,8 @@
 import sessionManager from './sessionManager';
 
+const curretSession = sessionManager.getInstance();
+
 const request = (url, customHeader) => {
-  const curretSession = sessionManager.getInstance();
   const defaultHeader = {
     headers: {
       'Content-Type': 'application/json',
