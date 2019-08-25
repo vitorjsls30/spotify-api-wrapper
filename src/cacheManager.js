@@ -17,11 +17,12 @@ class cacheManager{
     this[option] = value;
   }
 
-  storeItem(search) {
+  storeItem(item) {
     if(this.history.length === this.historySize) {
       this.history.pop();
     }
-    this.history.splice(0,0, search);
+    const {search, type, items} = item;
+    this.history.splice(0,0, {search, type, items});
   }
 
   getHistory() {
