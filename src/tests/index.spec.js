@@ -2,8 +2,6 @@ import spotifyApiWrapper from '../index';
 
 global.fetch = require('node-fetch');
 
-const current_token = 'BQCckdNXOiGk1EAlNFiGoonvria0lXkxkrtiWJ0VrlsN16MNAnV8qrgzn20XHA4J8hZ2l4J7uTA6ITQEJA1HYyvEesD1ua';
-const expectedHeader = { "headers": { "Accept": "application/json", "Authorization": `Bearer ${current_token}`, "Content-Type": "application/json" } };
 const clientId = 'a3909a54308c4cb780b07d305e797cb6';
 const redirectUri = 'https://my-spotify-player.com';
 

@@ -8,7 +8,7 @@ function search() {
     query: (query, type) => {
       return request(`${API_URL}/search?q=${query}&type=${type}`)
         .then(data => {
-          currentCache.storeItem({search: query, type, items: data.items || []});
+          currentCache.storeItem({search: query, type, response: data || []});
           return data;
         });
     }

@@ -21,8 +21,8 @@ class cacheManager{
     if(this.history.length === this.historySize) {
       this.history.pop();
     }
-    const {search, type, items} = item;
-    this.history.splice(0,0, {search, type, items});
+    const {search, type, response} = item;
+    this.history.splice(0,0, {search, type, response});
   }
 
   getHistory() {
