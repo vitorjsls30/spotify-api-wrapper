@@ -17,7 +17,7 @@ fdescribe(`Cache Manager`, () => {
   });
 
   it('should set a searched item into the history list', () => {
-    const item = { search: 'artist-name', type: 'artist', response: [] };
+    const item = { search: 'album-name', type: 'abum', response: [] };
     sut.storeItem(item);
     const history = sut.getHistory();
 
@@ -34,9 +34,9 @@ fdescribe(`Cache Manager`, () => {
 
 
   it('should store items in reverse to keep history order', () => {
-    const item1 = { search: 'name1', type: 'artist', response: [] };
-    const item2 = { search: 'name2', type: 'artist', response: [] };
-    const item3 = { search: 'name3', type: 'artist', response: [] };
+    const item1 = { search: 'name1', type: 'album', response: [] };
+    const item2 = { search: 'name2', type: 'album', response: [] };
+    const item3 = { search: 'name3', type: 'album', response: [] };
     sut.storeItem(item1);
     sut.storeItem(item2);
     sut.storeItem(item3);
@@ -68,4 +68,11 @@ fdescribe(`Cache Manager`, () => {
     const history = sut.getHistory();
     expect(history[0]).toEqual(searchedItem);
   });
+
+  it('should store the chosen albums', () => {
+    sut.storeChoice({name: 'artist-name', id: 'random-album-id'});
+
+    const chosenAlbums = sut.getChosenAlbums();
+    expect(chosenAlbums.length).toEqual(1);
+  })
 });
