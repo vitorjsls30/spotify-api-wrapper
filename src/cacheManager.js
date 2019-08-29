@@ -3,6 +3,7 @@ let cacheManagerInstance = null;
 class cacheManager{
   constructor() {
     this.history = [];
+    this.choices = [];
     this.historySize = 10;
   }
 
@@ -25,8 +26,17 @@ class cacheManager{
     this.history.splice(0,0, {search, type, response});
   }
 
+  storeChoice(choice) {
+    const {query, name, id, type} = choice;
+    this.choices.push({query, name, id, type});
+  }
+
   getHistory() {
     return this.history;
+  }
+
+  getChosenAlbums() {
+    return this.choices;
   }
 
   cleanHistory() {
