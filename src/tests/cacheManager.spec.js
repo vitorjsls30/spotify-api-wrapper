@@ -70,7 +70,7 @@ fdescribe(`Cache Manager`, () => {
   });
 
   it('should store the chosen albums', () => {
-    sut.storeChoice({name: 'artist-name', id: 'random-album-id'});
+    sut.storeChoice({query: 'original-searched-item', name: 'album-name', id: 'random-album-id', type: 'album'});
 
     const chosenAlbums = sut.getChosenAlbums();
     expect(chosenAlbums.length).toEqual(1);
