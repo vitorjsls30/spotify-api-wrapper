@@ -31,6 +31,12 @@ class cacheManager{
     this.choices.push({query, name, id, type});
   }
 
+  getCachedData(query) {
+    return this.history.find((item) => {
+      return item.search === query.search;
+    });
+  }
+
   getHistory() {
     return this.history;
   }

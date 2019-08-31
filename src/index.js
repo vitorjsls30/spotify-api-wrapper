@@ -1,7 +1,6 @@
 import album from './album';
 import search from './search';
 import sessionManager from './sessionManager';
-import cacheManager from './cacheManager';
 
 class spotifyApiWrapper {
   constructor(options) {

@@ -17,7 +17,7 @@ fdescribe(`Cache Manager`, () => {
   });
 
   it('should set a searched item into the history list', () => {
-    const item = { search: 'album-name', type: 'abum', response: [] };
+    const item = { search: 'album-name', type: 'album', response: [] };
     sut.storeItem(item);
     const history = sut.getHistory();
 
@@ -69,10 +69,20 @@ fdescribe(`Cache Manager`, () => {
     expect(history[0]).toEqual(searchedItem);
   });
 
-  it('should store the chosen albums', () => {
+  it('should store the album chosen by the user', () => {
     sut.storeChoice({query: 'original-searched-item', name: 'album-name', id: 'random-album-id', type: 'album'});
 
     const chosenAlbums = sut.getChosenAlbums();
     expect(chosenAlbums.length).toEqual(1);
-  })
+  });
+
+  fit('should return the cached data for a given search', () => {
+    const searchedItem = { search: 'original-search', type: 'album', response: [{data: 'my-data'}] };
+    sut.storeItem(searchedItem);
+
+    const cachedData = sut.getCachedData({search: 'original-search'});
+
+    expect(cachedData.response.length).toEqual(1);
+    expect(cachedData.response[0].data).toEqual('my-data')
+  });
 });
