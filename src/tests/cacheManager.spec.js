@@ -110,4 +110,9 @@ fdescribe(`Cache Manager`, () => {
     expect(cachedChoiceData.name).toEqual('album-name');
     expect(cachedChoiceData.id).toEqual('random-id');
   });
+
+  // TODO - REORDER CHOICES ARR TO REFLECT VISITED BEHAVIOR
+  it('should reorganize the choices when it is visited', () => {
+
+  });
 });
