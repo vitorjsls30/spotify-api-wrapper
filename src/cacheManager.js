@@ -27,13 +27,24 @@ class cacheManager{
   }
 
   storeChoice(choice) {
-    const {query, name, id, type} = choice;
-    this.choices.push({query, name, id, type});
+    const {search, name, id, type} = choice;
+    this.choices.push({search, name, id, type});
   }
 
   getCachedData(query) {
     return this.history.find((item) => {
       return item.search === query.search;
+    });
+  }
+
+  getCachedChoiceData(choice) {
+    const historyItem = this.getCachedData(choice);
+    if(!historyItem.response[choice.type].items.length > 0) {
+      return {};
+    }
+
+    return historyItem.response[choice.type].items.find((item) => {
+      return item.id === choice.id;
     });
   }
 
