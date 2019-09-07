@@ -23,12 +23,12 @@ class cacheManager{
       this.history.pop();
     }
     const {search, type, response} = item;
-    this.history.splice(0,0, {search, type, response});
+    this.history.splice(0, 0, {search, type, response});
   }
 
   storeChoice(choice) {
     const {search, name, id, type} = choice;
-    this.choices.push({search, name, id, type});
+    this.choices.splice(0, 0, {search, name, id, type});
   }
 
   getCachedData(query) {

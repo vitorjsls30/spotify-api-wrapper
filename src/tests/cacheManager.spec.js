@@ -77,7 +77,13 @@ fdescribe(`Cache Manager`, () => {
   });
 
   it('should return the cached data for a given search', () => {
-    const searchedItem = { search: 'original-search', type: 'album', response: { data: 'my-data' } };
+    const searchedItem = {
+      search: 'original-search',
+      type: 'album',
+      response: {
+        data: 'my-data'
+      }
+    };
     sut.storeItem(searchedItem);
 
     const cachedData = sut.getCachedData({ search: 'original-search' });
@@ -111,8 +117,33 @@ fdescribe(`Cache Manager`, () => {
     expect(cachedChoiceData.id).toEqual('random-id');
   });
 
-  // TODO - REORDER CHOICES ARR TO REFLECT VISITED BEHAVIOR
   it('should reorganize the choices when it is visited', () => {
+    const choice1 = {
+      search: 'original-search',
+      name: 'album-name',
+      id: 'random-id',
+      type: 'album'
+    };
+    const choice2 = {
+      search: 'original-search2',
+      name: 'album-name2',
+      id: 'random-id2',
+      type: 'album2'
+    };
+    const choice3 = {
+      search: 'original-search3',
+      name: 'album-name3',
+      id: 'random-id3',
+      type: 'album3'
+    };
 
+    sut.storeChoice(choice1);
+    sut.storeChoice(choice2);
+    sut.storeChoice(choice3);
+
+    const storedChoices = sut.getChosenAlbums();
+    expect(storedChoices[0]).toEqual(choice3);
+    expect(storedChoices[1]).toEqual(choice2);
+    expect(storedChoices[2]).toEqual(choice1);
   });
 });
