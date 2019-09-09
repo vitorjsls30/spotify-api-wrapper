@@ -1,6 +1,12 @@
 import cacheManager from '../cacheManager';
 
 let sut;
+const choice = {
+  search: 'original-search',
+  name: 'album-name',
+  id: 'random-id',
+  type: 'album'
+};
 
 beforeEach(() => {
   sut = cacheManager.getInstance();
@@ -8,6 +14,7 @@ beforeEach(() => {
 
 afterEach(() => {
   sut.cleanHistory();
+  sut.cleanChoices();
 });
 
 fdescribe(`Cache Manager`, () => {
@@ -30,7 +37,7 @@ fdescribe(`Cache Manager`, () => {
 
     const history = sut.getHistory();
     expect(history.length).toEqual(0);
-  })
+  });
 
 
   it('should store items in reverse to keep history order', () => {
@@ -67,6 +74,14 @@ fdescribe(`Cache Manager`, () => {
 
     const history = sut.getHistory();
     expect(history[0]).toEqual(searchedItem);
+  });
+
+  it('should clean the chosen Albuns', () => {
+    sut.storeChoice(choice);
+    sut.cleanChoices();
+    const chosenAlbuns = sut.getChosenAlbums();
+
+    expect(chosenAlbuns.length).toEqual(0);
   });
 
   it('should store the album chosen by the user', () => {
@@ -118,12 +133,6 @@ fdescribe(`Cache Manager`, () => {
   });
 
   it('should reorganize the choices when it is visited', () => {
-    const choice1 = {
-      search: 'original-search',
-      name: 'album-name',
-      id: 'random-id',
-      type: 'album'
-    };
     const choice2 = {
       search: 'original-search2',
       name: 'album-name2',
@@ -137,13 +146,25 @@ fdescribe(`Cache Manager`, () => {
       type: 'album3'
     };
 
-    sut.storeChoice(choice1);
+    sut.storeChoice(choice);
     sut.storeChoice(choice2);
     sut.storeChoice(choice3);
 
     const storedChoices = sut.getChosenAlbums();
     expect(storedChoices[0]).toEqual(choice3);
     expect(storedChoices[1]).toEqual(choice2);
-    expect(storedChoices[2]).toEqual(choice1);
+    expect(storedChoices[2]).toEqual(choice);
+  });
+
+  it('should store the choices based on the choicesSize parameter', () => {
+    sut.setOption('chosenSize', 3);
+
+    sut.storeChoice(choice);
+    sut.storeChoice(choice);
+    sut.storeChoice(choice);
+    sut.storeChoice(choice);
+
+    const chosenAlbums = sut.getChosenAlbums();
+    expect(chosenAlbums.length).toEqual(3);
   });
 });

@@ -5,6 +5,7 @@ class cacheManager{
     this.history = [];
     this.choices = [];
     this.historySize = 10;
+    this.chosenSize = 10;
   }
 
   static getInstance() {
@@ -27,6 +28,9 @@ class cacheManager{
   }
 
   storeChoice(choice) {
+    if(this.choices.length == this.chosenSize) {
+      this.choices.pop();
+    }
     const {search, name, id, type} = choice;
     this.choices.splice(0, 0, {search, name, id, type});
   }
@@ -58,6 +62,10 @@ class cacheManager{
 
   cleanHistory() {
     this.history = [];
+  }
+
+  cleanChoices() {
+    this.choices = [];
   }
 }
 
