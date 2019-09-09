@@ -27,10 +27,21 @@ class cacheManager{
     this.history.splice(0, 0, {search, type, response});
   }
 
+  checkIteminChoices(choice) {
+    return this.choices.find((item) => {
+      return item.id == choice.id;
+    });
+  }
+
   storeChoice(choice) {
     if(this.choices.length == this.chosenSize) {
       this.choices.pop();
     }
+
+    if(this.checkIteminChoices(choice)) {
+      return;
+    }
+
     const {search, name, id, type} = choice;
     this.choices.splice(0, 0, {search, name, id, type});
   }

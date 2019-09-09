@@ -1,12 +1,9 @@
 import cacheManager from '../cacheManager';
 
 let sut;
-const choice = {
-  search: 'original-search',
-  name: 'album-name',
-  id: 'random-id',
-  type: 'album'
-};
+const choice = { search: 'original-search', name: 'album-name', id: 'random-id', type: 'album' };
+const choice2 = { search: 'original-search2', name: 'album-name2', id: 'random-id2', type: 'album2' };
+const choice3 = { search: 'original-search3', name: 'album-name3', id: 'random-id3', type: 'album3' };
 
 beforeEach(() => {
   sut = cacheManager.getInstance();
@@ -117,14 +114,6 @@ fdescribe(`Cache Manager`, () => {
       }
     };
     sut.storeItem(searchedItem);
-
-    const choice = {
-      search: 'original-search',
-      name: 'album-name',
-      id: 'random-id',
-      type: 'album'
-    };
-
     sut.storeChoice(choice);
     const cachedChoiceData = sut.getCachedChoiceData(choice);
 
@@ -133,19 +122,6 @@ fdescribe(`Cache Manager`, () => {
   });
 
   it('should reorganize the choices when it is visited', () => {
-    const choice2 = {
-      search: 'original-search2',
-      name: 'album-name2',
-      id: 'random-id2',
-      type: 'album2'
-    };
-    const choice3 = {
-      search: 'original-search3',
-      name: 'album-name3',
-      id: 'random-id3',
-      type: 'album3'
-    };
-
     sut.storeChoice(choice);
     sut.storeChoice(choice2);
     sut.storeChoice(choice3);
@@ -156,15 +132,30 @@ fdescribe(`Cache Manager`, () => {
     expect(storedChoices[2]).toEqual(choice);
   });
 
-  it('should store the choices based on the choicesSize parameter', () => {
+  fit('should store the choices based on the choicesSize parameter', () => {
     sut.setOption('chosenSize', 3);
 
+    const choice4 = {
+      search: 'original-search4',
+      name: 'album-name4',
+      id: 'random-id4',
+      type: 'album4'
+    };
+
     sut.storeChoice(choice);
-    sut.storeChoice(choice);
+    sut.storeChoice(choice2);
+    sut.storeChoice(choice3);
+    sut.storeChoice(choice4);
+
+    const chosenAlbums = sut.getChosenAlbums();
+    expect(chosenAlbums.length).toEqual(3);
+  });
+
+  it('should not store a repeated chosen albums', () => {
     sut.storeChoice(choice);
     sut.storeChoice(choice);
 
     const chosenAlbums = sut.getChosenAlbums();
-    expect(chosenAlbums.length).toEqual(3);
+    expect(chosenAlbums.length).toEqual(1);
   });
 });
