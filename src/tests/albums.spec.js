@@ -45,7 +45,7 @@ describe('Spotidy API Wrapper - Albums', () => {
       sut.album.getAlbum(id)
         .then(data => {
           expect(data).toEqual('mocked-data');
-          expect(global.fetch).toHaveBeenCalledWith(`https://api.spotify.com/v1/album/${id}?market=ES`, expectedHeader)
+          expect(global.fetch).toHaveBeenCalledWith(`https://api.spotify.com/v1/albums/${id}?market=ES`, expectedHeader)
           done();
         });
     });
@@ -71,7 +71,7 @@ describe('Spotidy API Wrapper - Albums', () => {
         sut.album.getTracks(id)
         .then(data => {
           expect(data).toEqual('mocked-data');
-          expect(global.fetch).toHaveBeenCalledWith(`https://api.spotify.com/v1/album/${id}/tracks?market=ES`, expectedHeader);
+          expect(global.fetch).toHaveBeenCalledWith(`https://api.spotify.com/v1/albums/${id}/tracks?market=ES`, expectedHeader);
           done();
         });
     });
