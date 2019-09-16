@@ -1,9 +1,10 @@
 let cacheManagerInstance = null;
+let history = [];
+let choices = [];
 
 class cacheManager{
   constructor() {
-    this.history = [];
-    this.choices = [];
+    history = [];
     this.historySize = 10;
     this.chosenSize = 10;
   }
@@ -20,34 +21,34 @@ class cacheManager{
   }
 
   storeItem(item) {
-    if(this.history.length === this.historySize) {
-      this.history.pop();
+    if(history.length === this.historySize) {
+      history.pop();
     }
     const {search, type, response} = item;
-    this.history.splice(0, 0, {search, type, response});
+    history.splice(0, 0, {search, type, response});
   }
 
-  checkIteminChoices(choice) {
-    return this.choices.find((item) => {
+  _checkIteminChoices(choice) {
+    return choices.find((item) => {
       return item.id == choice.id;
     });
   }
 
   storeChoice(choice) {
-    if(this.choices.length == this.chosenSize) {
-      this.choices.pop();
+    if(choices.length == this.chosenSize) {
+      choices.pop();
     }
 
-    if(this.checkIteminChoices(choice)) {
+    if(this._checkIteminChoices(choice)) {
       return;
     }
 
     const {search, name, id, type} = choice;
-    this.choices.splice(0, 0, {search, name, id, type});
+    choices.splice(0, 0, {search, name, id, type});
   }
 
   getCachedData(query) {
-    return this.history.find((item) => {
+    return history.find((item) => {
       return item.search === query.search;
     });
   }
@@ -64,19 +65,19 @@ class cacheManager{
   }
 
   getHistory() {
-    return this.history;
+    return history;
   }
 
   getChosenAlbums() {
-    return this.choices;
+    return choices;
   }
 
   cleanHistory() {
-    this.history = [];
+    history = [];
   }
 
   cleanChoices() {
-    this.choices = [];
+    choices = [];
   }
 }
 
