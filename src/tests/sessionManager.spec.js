@@ -21,8 +21,8 @@ describe('OAUTH', () => {
   it('should set the client application information', () => {
     sut.setAppInfo({ clientId, redirectUri });
 
-    expect(sut.oAuthState.clientId).toEqual(clientId);
-    expect(sut.oAuthState.redirectUri).toEqual(redirectUri);
+    expect(sut.getoAuthState('clientId')).toEqual(clientId);
+    expect(sut.getoAuthState('redirectUri')).toEqual(redirectUri);
   });
 
   it('should require authorize URL', (done) => {
@@ -37,10 +37,10 @@ describe('OAUTH', () => {
 
     sut.getUriParams();
 
-    expect(sut.oAuthState.access_token).toBeDefined();
-    expect(sut.oAuthState.token_type).toEqual('Bearer');
-    expect(sut.oAuthState.expires_in).toBeGreaterThan(0);
-    expect(sut.oAuthState.state).toEqual('123');
+    expect(sut.getoAuthState('access_token')).toBeDefined();
+    expect(sut.getoAuthState('token_type')).toEqual('Bearer');
+    expect(sut.getoAuthState('expires_in')).toBeGreaterThan(0);
+    expect(sut.getoAuthState('state')).toEqual('123');
 
     done();
   });
@@ -51,7 +51,7 @@ describe('OAUTH', () => {
     
     sut.getUriParams();
 
-    expect(sut.oAuthState.error).toEqual('access_denied');
+    expect(sut.getoAuthState('error')).toEqual('access_denied');
 
     done();
   });

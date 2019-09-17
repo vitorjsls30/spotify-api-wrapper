@@ -71,13 +71,13 @@ describe('Spotidy API Wrapper - Search', () => {
     it('should redirect user to renew token if it has expired', (done) => {
       const query = 'mock-album';
       const type = 'album';
-      const current_query_parameters = sut.session.query_parameters;
+      const current_query_parameters = sut.session.getQueryParameters();
       const expected_assign = `${AUTH_URL}/authorize?${current_query_parameters}`;
 
       window.location.assign = jest.fn();
 
-      sut.session.oAuthState.expires_in = 1;
-      sut.session.oAuthState.received_at = Date.now();
+      sut.session.setoAuthState('expires_in', 1);
+      sut.session.setoAuthState('received_at', Date.now());
       
       setTimeout(function(){
         sut.search.query(query, type);

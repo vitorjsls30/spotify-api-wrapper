@@ -7,7 +7,7 @@ const request = (url, customHeader) => {
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      Authorization: `Bearer ${curretSession.oAuthState.access_token}`
+      Authorization: `Bearer ${curretSession.getoAuthState('access_token')}`
     }
   };
 
