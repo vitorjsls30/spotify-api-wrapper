@@ -1,20 +1,17 @@
 import { AUTH_URL, CLIENT_ID, REDIRECT_URI } from './config';
 
 let sessionManagerInstance = null;
+let query_parameters = null; 
+let oAuthState = {
+  access_token: '',
+  token_type: '',
+  expires_in: '',
+  received_at: '',
+  state: '',
+  error: ''
+};
 
 class sessionManager {
-  constructor() {
-    this.query_parameters = null; 
-    this.oAuthState = {
-      access_token: '',
-      token_type: '',
-      expires_in: '',
-      received_at: '',
-      state: '',
-      error: ''
-    }
-  }
-  
   static getInstance() {
     if(!sessionManagerInstance) {
       sessionManagerInstance = new sessionManager();
@@ -22,20 +19,32 @@ class sessionManager {
     return sessionManagerInstance;
   }
 
+  getoAuthState(prop) {
+    return oAuthState[prop] || undefined;
+  }
+
+  setoAuthState(prop, value) {
+    oAuthState[prop] = value;
+  }
+
+  getQueryParameters() {
+    return query_parameters;
+  }
+
   setAppInfo(options) {
     const {clientId, redirectUri} = options;
 
-    this.oAuthState.clientId = clientId;
-    this.oAuthState.redirectUri = redirectUri;
-    this.query_parameters = `client_id=${clientId}&response_type=token&redirect_uri=${redirectUri}&state=123`
+    oAuthState.clientId = clientId;
+    oAuthState.redirectUri = redirectUri;
+    query_parameters = `client_id=${clientId}&response_type=token&redirect_uri=${redirectUri}&state=123`;
   }
 
   authorize() {
-    window.location.assign(`${AUTH_URL}/authorize?${this.query_parameters}`)
+    window.location.assign(`${AUTH_URL}/authorize?${query_parameters}`)
   };
 
   checkTokenExpiration() {
-    return Date.now() - this.oAuthState.received_at > this.oAuthState.expires_in;
+    return Date.now() - oAuthState.received_at > oAuthState.expires_in;
   }
 
   reduceParameters(acc, curr) {
@@ -54,7 +63,7 @@ class sessionManager {
       if(hash_parameters.length > 0) {
         response_parameters = hash_parameters.reduce(this.reduceParameters, {});
         
-        this.oAuthState = { 
+        oAuthState = { 
           access_token: response_parameters.access_token || '',
           token_type: response_parameters.token_type || '',
           expires_in: Number(response_parameters.expires_in) || 0,
@@ -69,14 +78,14 @@ class sessionManager {
     const query_params = new URLSearchParams(window.location.search);
     
     if(query_params.has('error')) {
-      this.oAuthState.error = query_params.get('error');   
+      oAuthState.error = query_params.get('error');   
     } else {
       const location_hash = window.location.hash;
       
       this.setHashParameters(location_hash);
     }
 
-    return this.oAuthState;
+    return oAuthState;
   }
 };
 

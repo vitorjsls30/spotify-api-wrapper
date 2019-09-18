@@ -1,12 +1,13 @@
 import sessionManager from './sessionManager';
 
+const curretSession = sessionManager.getInstance();
+
 const request = (url, customHeader) => {
-  const curretSession = sessionManager.getInstance();
   const defaultHeader = {
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      Authorization: `Bearer ${curretSession.oAuthState.access_token}`
+      Authorization: `Bearer ${curretSession.getoAuthState('access_token')}`
     }
   };
 

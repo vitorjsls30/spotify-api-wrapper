@@ -14,7 +14,7 @@ const mockFetchPromise = Promise.resolve({
 const sut = new spotifyApiWrapper({ clientId, redirectUri });
 
 beforeEach(() => {
-  sut.session.oAuthState.access_token = 'BQCckdNXOiGk1EAlNFiGoonvria0lXkxkrtiWJ0VrlsN16MNAnV8qrgzn20XHA4J8hZ2l4J7uTA6ITQEJA1HYyvEesD1ua';
+  sut.session.setoAuthState('access_token', 'BQCckdNXOiGk1EAlNFiGoonvria0lXkxkrtiWJ0VrlsN16MNAnV8qrgzn20XHA4J8hZ2l4J7uTA6ITQEJA1HYyvEesD1ua');
   jest.spyOn(global, 'fetch').mockImplementation(() => mockFetchPromise);
 })
 
@@ -39,20 +39,20 @@ describe('Spotidy API Wrapper - Albums', () => {
 
     it('should retrieve album info by ID', (done) => {
       const id = '382ObEPsp2rxGrnsizN5TX';
-      const current_token = sut.session.oAuthState.access_token;
+      const current_token = sut.session.getoAuthState('access_token');
       const expectedHeader = {"headers": {"Accept": "application/json", "Authorization": `Bearer ${current_token}`, "Content-Type": "application/json"}};
 
       sut.album.getAlbum(id)
         .then(data => {
           expect(data).toEqual('mocked-data');
-          expect(global.fetch).toHaveBeenCalledWith(`https://api.spotify.com/v1/album/${id}?market=ES`, expectedHeader)
+          expect(global.fetch).toHaveBeenCalledWith(`https://api.spotify.com/v1/albums/${id}?market=ES`, expectedHeader)
           done();
         });
     });
 
     it('should retrieve several albums by their IDs', (done) => {
       const ids = ['382ObEPsp2rxGrnsizN5TX', '1A2GTWGtFfWp7KSQTwWOyo', '2noRn2Aes5aoNVsU6iWThc'];
-      const current_token = sut.session.oAuthState.access_token;
+      const current_token = sut.session.getoAuthState('access_token');
       const expectedHeader = {"headers": {"Accept": "application/json", "Authorization": `Bearer ${current_token}`, "Content-Type": "application/json"}};
 
       sut.album.getAlbums(ids)
@@ -65,13 +65,13 @@ describe('Spotidy API Wrapper - Albums', () => {
       
       it('should retrieve an album tracks list', (done) => {
         const id = '382ObEPsp2rxGrnsizN5TX';
-        const current_token = sut.session.oAuthState.access_token;
+        const current_token = sut.session.getoAuthState('access_token');
         const expectedHeader = {"headers": {"Accept": "application/json", "Authorization": `Bearer ${current_token}`, "Content-Type": "application/json"}};
 
         sut.album.getTracks(id)
         .then(data => {
           expect(data).toEqual('mocked-data');
-          expect(global.fetch).toHaveBeenCalledWith(`https://api.spotify.com/v1/album/${id}/tracks?market=ES`, expectedHeader);
+          expect(global.fetch).toHaveBeenCalledWith(`https://api.spotify.com/v1/albums/${id}/tracks?market=ES`, expectedHeader);
           done();
         });
     });

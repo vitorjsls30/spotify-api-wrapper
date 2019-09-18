@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/jest",
-    "test:watch": "./node_modules/.bin/jest --watch",
+    "test:watch": "./node_modules/.bin/jest --watch --verbose",
     "clear": "rimraf dist",
     "build": "npm run clear && webpack --mode development",
     "build:prod": "npm run clear && webpack --mode production",
@@ -27,6 +27,7 @@
     "@babel/preset-env": "^7.5.4",
     "@babel/register": "^7.4.4",
     "babel-jest": "^24.8.0",
+    "babel-loader": "^8.0.6",
     "chai": "^4.2.0",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",

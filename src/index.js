@@ -1,6 +1,7 @@
 import album from './album';
 import search from './search';
 import sessionManager from './sessionManager';
+import cacheManager from './cacheManager';
 
 class spotifyApiWrapper {
   constructor(options) {
@@ -9,9 +10,10 @@ class spotifyApiWrapper {
 
     this.session = sessionManager.getInstance();
     this.session.setAppInfo(options);
+    this.cache = cacheManager.getInstance();
 
     this.album = album();
-    this.search = search.bind(this)();
+    this.search = search();
   }
 }
 
