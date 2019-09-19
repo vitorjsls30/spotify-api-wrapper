@@ -19,5 +19,5 @@ jobs:
           paths:
             - ./node_modules
       - run:
-          name: 'test'
+          name: 'run-unit-tests'
           command: npm test
