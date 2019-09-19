@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/spotify-api-wrapper
     docker:
-      - image: circleci/node:10
+      - image: circleci/node:4.8.2
     steps:
       - checkout
       - restore_cache:
