@@ -3,9 +3,12 @@ jobs:
   build:
     working_directory: ~/spotify-api-wrapper
     docker:
-      - image: circleci/node:4.8.2
+      - image: circleci/node:10
     steps:
       - checkout
+      - run:
+          name: 'update-npm'
+          command: 'sudo npm install -g npm@latest'
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
