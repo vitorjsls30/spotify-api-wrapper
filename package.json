@@ -6,6 +6,7 @@
   "scripts": {
     "test": "./node_modules/.bin/jest",
     "test:watch": "./node_modules/.bin/jest --watch --verbose",
+    "coverage": "./node_modules/.bin/jest --coverage && cat ./coverage/lcov.info | coveralls",
     "clear": "rimraf dist",
     "build": "npm run clear && webpack --mode development",
     "build:prod": "npm run clear && webpack --mode production",
@@ -21,6 +22,15 @@
     "url": "https://github.com/vitorjsls30/spotify-api-wrapper/issues"
   },
   "homepage": "https://github.com/vitorjsls30/spotify-api-wrapper#readme",
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node-modules/",
+      "/src/tests/"
+    ]
+  },
   "devDependencies": {
     "@babel/cli": "^7.5.0",
     "@babel/core": "^7.5.4",
@@ -29,6 +39,7 @@
     "babel-jest": "^24.8.0",
     "babel-loader": "^8.0.6",
     "chai": "^4.2.0",
+    "coveralls": "^3.0.6",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "jest": "^24.8.0",

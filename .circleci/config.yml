@@ -21,3 +21,6 @@ jobs:
       - run:
           name: 'run-unit-tests'
           command: npm test
+      - run:
+          name: 'code-coverage'
+          command: npm run coverage
