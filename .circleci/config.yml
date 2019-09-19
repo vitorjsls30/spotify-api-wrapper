@@ -5,4 +5,18 @@ jobs:
       - image: circleci/node:4.8.2
     steps:
       - checkout
-      - run: echo "yo!! my fisrt runner!!"
+      - run:
+          name: 'update-npm'
+          command: 'sudo npm install -g npm@latest'
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: 'install-dependencies'
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ,/node_modules
+      - run:
+          name: 'test'
+          command: npm test
