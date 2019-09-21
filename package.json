@@ -4,9 +4,9 @@
   "description": "Spotify Wrapper API",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/jest",
+    "test": "./node_modules/.bin/jest --coverage --coverageReporters=lcov",
     "test:watch": "./node_modules/.bin/jest --watch --verbose",
-    "coverage": "./node_modules/.bin/jest --coverage && cat ./coverage/lcov.info | coveralls",
+    "coverage": "cat ./coverage/lcov.info | coveralls",
     "clear": "rimraf dist",
     "build": "npm run clear && webpack --mode development",
     "build:prod": "npm run clear && webpack --mode production",
