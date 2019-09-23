@@ -1,5 +1,5 @@
 {
-  "name": "spotify-api-wrapper",
+  "name": "vs-spotify-api-wrapper",
   "version": "1.0.0",
   "description": "Spotify Wrapper API",
   "main": "index.js",
