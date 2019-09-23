@@ -6,11 +6,10 @@
   "scripts": {
     "test": "./node_modules/.bin/jest --coverage --coverageReporters=lcov",
     "test:watch": "./node_modules/.bin/jest --watch --verbose",
+    "start": "webpack-dev-server --open --config webpack.dev.js",
     "coverage": "cat ./coverage/lcov.info | coveralls",
     "clear": "rimraf dist",
-    "build": "npm run clear && webpack --mode development",
-    "build:prod": "npm run clear && webpack --mode production",
-    "start": "webpack-dev-server --mode development --open"
+    "build:prod": "npm run clear && webpack --config webpack.prod.js"
   },
   "repository": {
     "type": "git",
@@ -46,7 +45,8 @@
     "node-fetch": "^2.6.0",
     "webpack": "^4.35.3",
     "webpack-cli": "^3.3.5",
-    "webpack-dev-server": "^3.7.2"
+    "webpack-dev-server": "^3.7.2",
+    "webpack-merge": "^4.2.2"
   },
   "dependencies": {
     "@babel/polyfill": "^7.4.4",

@@ -9,9 +9,6 @@ module.exports = {
     library: 'spotifyApiWrapper',
     libraryTarget: 'umd'
   },
-  devServer: {
-    contentBase: './dist'
-  },
   module: {
     rules: [
       {
