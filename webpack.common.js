@@ -5,7 +5,7 @@ module.exports = {
   entry: './index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js',
+    filename: 'spotifyApiWrapper.umd.js',
     library: 'spotifyApiWrapper',
     libraryTarget: 'umd'
   },

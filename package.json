@@ -9,7 +9,7 @@
     "start": "webpack-dev-server --open --config webpack.dev.js",
     "coverage": "cat ./coverage/lcov.info | coveralls",
     "clear": "rimraf dist",
-    "build:prod": "npm run clear && webpack --config webpack.prod.js"
+    "build": "npm run clear && webpack --config webpack.prod.js"
   },
   "repository": {
     "type": "git",
