@@ -41,7 +41,7 @@ var albums = spotify.search.query('U2', 'album');
 
 ### CommonJS
 ```js
-var spotifyWrapper = require('vs-spotify-wrapper');
+var spotifyApiWrapper = require('vs-spotify-wrapper');
 
 const spotify = new spotifyApiWrapper({
     clientId: 'YOUR_SPOTIFY_CLIENT_ID',
@@ -57,7 +57,7 @@ var albums = spotify.search.query('U2', 'album');
 <!--importing library-->
 <script src="spotifyApiWrapper.umd.js"></script>
 ```
-After that the library will be avaiable to the Global as `SpotifyWrapper`. Follow an example:
+After that the library will be avaiable to the Global as `spotifyApiWrapper`. Follow an example:
 ```js
 const spotify = new spotifyApiWrapper({
         clientId: 'YOUR_SPOTIFY_CLIENT_ID',
@@ -66,11 +66,11 @@ const spotify = new spotifyApiWrapper({
 const albums = spotify.search.query('U2', 'album');
 ```
 ## Session Management
-To perform requests to the spotify API Endpointsan accessToken must be provided and to facilitate this process the Wrapper has a module responsible for dealing with this. The **sessionManager** Module offers a group of methods that can be used to not only request authentication but also parse the necessary response parameters provided by the spotify API.
+To perform requests to the spotify API Endpoints an accessToken must be provided and to facilitate this process the Wrapper has a module responsible for dealing with this. The **sessionManager** Module offers a group of methods that can be used to not only request authentication but also parse the necessary response parameters provided by the spotify API.
 The authentication mode adopted was the **Implicit Grant Flow**. More information can be found at: (https://developer.spotify.com/documentation/general/guides/authorization-guide/#implicit-grant-flow). In the following Methods Section more details can be found related with the **sessionManager** available methods.
 
 ## Cache Management
-Another feature is the **cacheManager** Module. With this is possible to cache the latest performed searchs and also the items chose by the user in your implementation. After performing a **search** operation, the query used is automatically stored at the search history alongside with it response, if any, from the spotify API.
+Another feature is the **cacheManager** Module. With this is possible to cache the latest performed searchs and also the items chose by the user in your implementation. After performing a **search** operation, the query used is automatically stored at the search history alongside with it's response, if any, from the spotify API.
 User choices among the returned items can also be stored and they also contain related information like which query term was used, the item name itself and so on. Check the **Methods** section to see related information about the available methods.
 
 ## Methods
@@ -167,7 +167,7 @@ spotify.album.getTracks('4aawyAB9vmqN3uQ7FjRGTy')
 |`option_name`   |*string* | 'historySize', 'chosenSize'|
 
 **Options Available**
-* **historySize**: Sets the maximum size of the list that stores the searched history
+* **historySize**: Sets the maximum size of the list that stores the searched items
 * **chosenSize**: Sets the maximum size of the list that stores the items chosen by the user
 
 **Example**
@@ -178,12 +178,13 @@ spotify.cache.setOptions('historySize', 3);
 
 ### cache.storeItem(item)
 > Stores an item received from a previous request to the spotify API into the cache list
+> For a full list of the data model for each resource returned check: (https://developer.spotify.com/documentation/web-api/reference/object-model/)
 
 **Arguments**
 
 | Argument | Type    | Object Structure           |
 |----------|---------|-------------------|
-|`item`   |*object* | { search: 'u2', type: 'album', response: [{...}, {...}] }|
+|`item`   |*object* | { search: 'searched_string', type: 'album', response: [{...}, {...}] }|
 
 **Item Structure**
 * **search**: The searched string by the user
@@ -197,16 +198,16 @@ spotify.cache.storeItem({ search: 'u2', type: 'album', response: {[...]} });
 ```
 
 ### cache.storeChoice(choice)
-> Stores an item received from a previous request to the spotify API into the cache list
+> Stores an item received from a previous request to the spotify API into the Chosen Items Cache list
 
 **Arguments**
 
 | Argument | Type    | Object Structure           |
 |----------|---------|-------------------|
-|`choice`   |*object* | { search: 'u2', type: 'album', response: [{...}, {...}] }|
+|`choice`   |*object* | { search: 'some_random_search', type: 'album', response: [{...}, {...}] }|
 
 **Item Structure**
-* **search**: The searched string by the user that originated this item as a response
+* **search**: The searched string by the user that originated the choice item as a response
 * **name**: The item name string chose by the user
 * **id**: The spotify API resource ID provided in the request response
 * **type**: The type of the performed search ('album', 'artist', 'track' or 'playist')
@@ -235,7 +236,7 @@ spotify.cache.storeChoice({ search: 'original-searched-item',
 **Example**
 
 ```js
-spotify.cache.getCachedData('my_query_value');
+spotify.cache.getCachedData('my_previous_query_value');
 ```
 
 ### cache.getCachedChoiceData(choice)
@@ -245,7 +246,7 @@ spotify.cache.getCachedData('my_query_value');
 
 | Argument | Type    | Object Structure           |
 |----------|---------|-------------------|
-|`choice`   |*object* | { search: 'original-search', name: 'item-album-name', id: 'spotify-item-id', type: 'album' }|
+|`choice`   |*object* | { search: 'original-search', name: 'item-name', id: 'spotify-item-id', type: 'album' }|
 
 **Item Structure**
 * **search**: The searched string by the user that originated this item as a response
@@ -263,31 +264,29 @@ spotify.cache.getCachedChoiceData(choice);
 ### cache.getHistory()
 > Gets the full Cached List of searched items
 
-**Response Structure**
-The data returned is an Array of Objects that represents the searched history
-```js
-[{ search: 'name1', type: 'album', response: {} }, { search: 'name1', type: 'album', response: {} }, ...]
-```
-
 **Example**
 
 ```js
 const history = spotify.cache.getHistory();
 ```
+**Response Structure**
+The data returned is an Array of Objects that represents the searched history
+```js
+[{ search: 'first_search', type: 'album', response: {} }, { search: 'second_search', type: 'track', response: {} }, ...]
+```
 
 ### cache.getChosenAbums()
 > Gets the full Cached List of Chosen Items by the User
-
-**Response Structure**
-The data returned is an Array of Objects that represents the items chosen by the user
-```js
-[{ search: 'original-search', name: 'album-name', id: 'random-id', type: 'album' }, { search: 'another-search', name: 'chosen-track-name', id: 'another-random-id', type: 'track' }, ...]
-```
 
 **Example**
 
 ```js
 const choices = spotify.cache.getChosenAlbums();
+```
+**Response Structure**
+The data returned is an Array of Objects that represents the items chosen by the user
+```js
+[{ search: 'original-search', name: 'album-name', id: 'random-id', type: 'album' }, { search: 'another-search', name: 'chosen-track-name', id: 'another-random-id', type: 'track' }, ...]
 ```
 
 ## Contributing
