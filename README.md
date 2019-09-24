@@ -65,6 +65,14 @@ const spotify = new spotifyApiWrapper({
     });
 const albums = spotify.search.query('U2', 'album');
 ```
+## Session Management
+To perform requests to the spotify API Endpointsan accessToken must be provided and to facilitate this process the Wrapper has a module responsible for dealing with this. The **sessionManager** Module offers a group of methods that can be used to not only request authentication but also parse the necessary response parameters provided by the spotify API.
+The authentication mode adopted was the **Implicit Grant Flow**. More information can be found at: (https://developer.spotify.com/documentation/general/guides/authorization-guide/#implicit-grant-flow). In the following Methods Section more details can be found related with the **sessionManager** available methods.
+
+## Cache Management
+Another feature is the **cacheManager** Module. With this is possible to cache the latest performed searchs and also the items chose by the user in your implementation. After performing a **search** operation, the query used is automatically stored at the search history alongside with it response, if any, from the spotify API.
+User choices among the returned items can also be stored and they also contain related information like which query term was used, the item name itself and so on. Check the **Methods** section to see related information about the available methods.
+
 ## Methods
 > Follow the mehods that the libray provides
 
