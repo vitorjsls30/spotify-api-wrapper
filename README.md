@@ -149,6 +149,139 @@ spotify.album.getTracks('4aawyAB9vmqN3uQ7FjRGTy')
   })
 ```
 
+### cache.setOption('option', value)
+> Sets an option value
+
+**Arguments**
+
+| Argument | Type    | Options           |
+|----------|---------|-------------------|
+|`option_name`   |*string* | 'historySize', 'chosenSize'|
+
+**Options Available**
+* **historySize**: Sets the maximum size of the list that stores the searched history
+* **chosenSize**: Sets the maximum size of the list that stores the items chosen by the user
+
+**Example**
+
+```js
+spotify.cache.setOptions('historySize', 3);
+```
+
+### cache.storeItem(item)
+> Stores an item received from a previous request to the spotify API into the cache list
+
+**Arguments**
+
+| Argument | Type    | Object Structure           |
+|----------|---------|-------------------|
+|`item`   |*object* | { search: 'u2', type: 'album', response: [{...}, {...}] }|
+
+**Item Structure**
+* **search**: The searched string by the user
+* **type**: The type of the performed search ('album', 'artist', 'track' or 'playist')
+*  **response**: The spotify API response, usually an Array of Objects
+
+**Example**
+
+```js
+spotify.cache.storeItem({ search: 'u2', type: 'album', response: {[...]} });
+```
+
+### cache.storeChoice(choice)
+> Stores an item received from a previous request to the spotify API into the cache list
+
+**Arguments**
+
+| Argument | Type    | Object Structure           |
+|----------|---------|-------------------|
+|`choice`   |*object* | { search: 'u2', type: 'album', response: [{...}, {...}] }|
+
+**Item Structure**
+* **search**: The searched string by the user that originated this item as a response
+* **name**: The item name string chose by the user
+* **id**: The spotify API resource ID provided in the request response
+* **type**: The type of the performed search ('album', 'artist', 'track' or 'playist')
+
+**Example**
+
+```js
+spotify.cache.storeChoice({ search: 'original-searched-item',
+    name: 'chosen-album-name',
+    id: 'some-random-album-id',
+    type: 'album' });
+```
+
+### cache.getCachedData(query)
+> Get the items stored at the Cache List related with the query provided
+
+**Arguments**
+
+| Argument | Type    | Options           |
+|----------|---------|-------------------|
+|`query`   |*string* | 'some string to search by'|
+
+**Parameter description**
+* **query**: A string that may be present at the Cache List in the 'search' field of a Stored Item
+
+**Example**
+
+```js
+spotify.cache.getCachedData('my_query_value');
+```
+
+### cache.getCachedChoiceData(choice)
+> Get the item stored at the Choices Cache List related with the provided Choice Item
+
+**Arguments**
+
+| Argument | Type    | Object Structure           |
+|----------|---------|-------------------|
+|`choice`   |*object* | { search: 'original-search', name: 'item-album-name', id: 'spotify-item-id', type: 'album' }|
+
+**Item Structure**
+* **search**: The searched string by the user that originated this item as a response
+* **name**: The item name string chose by the user
+* **id**: The spotify API resource ID provided in the request response
+* **type**: The type of the performed search ('album', 'artist', 'track' or 'playist')
+
+**Example**
+
+```js
+const choice = { search: 'original-search', name: 'album-name', id: 'random-id', type: 'album' };
+spotify.cache.getCachedChoiceData(choice);
+```
+
+### cache.getHistory()
+> Gets the full Cached List of searched items
+
+**Response Structure**
+The data returned is an Array of Objects that represents the searched history
+```js
+[{ search: 'name1', type: 'album', response: {} }, { search: 'name1', type: 'album', response: {} }, ...]
+```
+
+**Example**
+
+```js
+const history = spotify.cache.getHistory();
+```
+
+### cache.getChosenAbums()
+> Gets the full Cached List of Chosen Items by the User
+
+**Response Structure**
+The data returned is an Array of Objects that represents the items chosen by the user
+```js
+[{ search: 'original-search', name: 'album-name', id: 'random-id', type: 'album' }, { search: 'another-search', name: 'chosen-track-name', id: 'another-random-id', type: 'track' }, ...]
+```
+
+**Example**
+
+```js
+const choices = spotify.cache.getChosenAlbums();
+```
+
 ## Contributing
 
 Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
