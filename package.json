@@ -1,7 +1,7 @@
 {
   "name": "vs-spotify-api-wrapper",
   "version": "1.0.0",
-  "description": "Spotify Wrapper API",
+  "description": "A Spotify API Wrapper using ES6. In addition to the items search methods the wrapper count on a session and cache management modules.",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/jest --coverage --coverageReporters=lcov",
