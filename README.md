@@ -27,7 +27,7 @@ $ npm install vs-spotify-api-wrapper --save
 ### ES6
 ```JS
 // import wrapper package
-import spotifyApiWrapper from 'vs-spotify-wrapper';
+import spotifyApiWrapper from 'vs-spotify-api-wrapper';
 
 // creating new instance
 const spotify = new spotifyApiWrapper({
@@ -41,7 +41,7 @@ var albums = spotify.search.query('U2', 'album');
 
 ### CommonJS
 ```js
-var spotifyApiWrapper = require('vs-spotify-wrapper');
+var spotifyApiWrapper = require('vs-spotify-api-wrapper');
 
 const spotify = new spotifyApiWrapper({
     clientId: 'YOUR_SPOTIFY_CLIENT_ID',
