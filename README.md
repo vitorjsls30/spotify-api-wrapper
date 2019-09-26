@@ -72,11 +72,11 @@ The authentication mode adopted was the **Implicit Grant Flow**. More informatio
 ### Main Functionality
 Before you can request any information from the Spotify API an Access Token is required and to obtain one, the user must grant access to his information through the Spotify API OAuth Authentication Flow. As the Access Token is received it is stored by the wrapper and used in future requests alongside with it's expiration period. After it expires, another token must be provided.
 The following steps must be met before any request to the API is made:
-* Request the user authorization (session.authorize() method)
-* Parse the received hash parameters after the Spotify API Authorization redirects the user back to your application (session.getUriParams() method)
+* Request the user authorization (**session.authorize()** method)
+* Parse the received hash parameters after the Spotify API Authorization redirects the user back to your application (**session.getUriParams()** method)
 
 After these two steps, the requests can be made to the Spotify API using the provided methods.
-In the following Methods Section more details can be found related with the **sessionManager** available methods.
+In the following **Methods** Section more details can be found related with the **sessionManager** available methods.
 
 
 ## Cache Management
@@ -84,9 +84,9 @@ Another feature is the **cacheManager** Module. With this is possible to cache t
 User choices among the returned items can also be stored and they also contain related information like which query term was used, the item name itself and so on. Check the **Methods** section to see related information about the available methods.
 
 ### Main Functionality
-When you perform a search using the **"search.query"** method two operations take place:
-1. Before the request is sent to the Spotify Api, the current access token retrieved previously has it's expiration period checked, if so, the user is automatically redirected to the Spotify API Authorization Page and a new permission will be requested.
-2. If the Current Access Token is valid, the search continues and if it's sucessful, the result is automatically cached using the "cache.storeItem" method. An item has the following structure:
+When you perform a search using the **"search.query"** method two operations takes place:
+1. Before the request is sent to the Spotify API, the current access token retrieved previously has it's expiration period checked, if so, the user is automatically redirected to the Spotify API Authorization Page and a new permission will be requested.
+2. If the Current Access Token is valid, the search continues and if it's sucessful, the result is automatically cached using the **"cache.storeItem"** method. An item has the following structure:
 ```js
 { search: ‘THE_SEARCHED_STRING’, type: ‘THE_REQUEST_TYPE’, response: [{…}, {…}] }
 ```
@@ -95,7 +95,7 @@ Where:
 * type: Refers to the spotify resource type being searched for: Album, Artist, Track or Playlist
 * response: The actual Spotify Api response. Usually a list of Objects
 
-In the following **Methods Section** a list with all the sessionManager methods will be provided
+In the following **Methods Section** a list with all the **cacheManager** methods will be provided
 
 ## Methods
 > Follow the mehods that the libray provides
