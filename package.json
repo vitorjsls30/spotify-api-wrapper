@@ -1,15 +1,15 @@
 {
-  "name": "spotify-api-wrapper",
+  "name": "vs-spotify-api-wrapper",
   "version": "1.0.0",
   "description": "Spotify Wrapper API",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/jest",
+    "test": "./node_modules/.bin/jest --coverage --coverageReporters=lcov",
     "test:watch": "./node_modules/.bin/jest --watch --verbose",
+    "start": "webpack-dev-server --open --config webpack.dev.js",
+    "coverage": "cat ./coverage/lcov.info | coveralls",
     "clear": "rimraf dist",
-    "build": "npm run clear && webpack --mode development",
-    "build:prod": "npm run clear && webpack --mode production",
-    "start": "webpack-dev-server --mode development --open"
+    "build": "npm run clear && webpack --config webpack.prod.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,15 @@
     "url": "https://github.com/vitorjsls30/spotify-api-wrapper/issues"
   },
   "homepage": "https://github.com/vitorjsls30/spotify-api-wrapper#readme",
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node-modules/",
+      "/src/tests/"
+    ]
+  },
   "devDependencies": {
     "@babel/cli": "^7.5.0",
     "@babel/core": "^7.5.4",
@@ -29,15 +38,18 @@
     "babel-jest": "^24.8.0",
     "babel-loader": "^8.0.6",
     "chai": "^4.2.0",
+    "coveralls": "^3.0.6",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "jest": "^24.8.0",
     "node-fetch": "^2.6.0",
     "webpack": "^4.35.3",
     "webpack-cli": "^3.3.5",
-    "webpack-dev-server": "^3.7.2"
+    "webpack-dev-server": "^3.7.2",
+    "webpack-merge": "^4.2.2"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.4.4"
+    "@babel/polyfill": "^7.4.4",
+    "core-js": "^2.6.9"
   }
 }
