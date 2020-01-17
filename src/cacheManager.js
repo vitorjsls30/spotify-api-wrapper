@@ -7,6 +7,7 @@ class cacheManager{
     history = [];
     this.historySize = 10;
     this.chosenSize = 10;
+    this.useLocalstorage = false;
   }
 
   static getInstance() {
@@ -25,7 +26,14 @@ class cacheManager{
       history.pop();
     }
     const {search, type, response} = item;
-    history.splice(0, 0, {search, type, response});
+
+    if(this.useLocalstorage) {
+      // Store history item into localStorage...
+      console.log('not implemented yet =z...');
+    } else {
+      history.splice(0, 0, {search, type, response});
+    }
+
   }
 
   _checkIteminChoices(choice) {

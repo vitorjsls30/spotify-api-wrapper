@@ -14,7 +14,7 @@ afterEach(() => {
   sut.cleanChoices();
 });
 
-fdescribe(`Cache Manager`, () => {
+describe(`Cache Manager`, () => {
 
   it('should be defined', () => {
     expect(sut).toBeDefined();
@@ -132,7 +132,7 @@ fdescribe(`Cache Manager`, () => {
     expect(storedChoices[2]).toEqual(choice);
   });
 
-  fit('should store the choices based on the choicesSize parameter', () => {
+  it('should store the choices based on the choicesSize parameter', () => {
     sut.setOption('chosenSize', 3);
 
     const choice4 = {
@@ -158,4 +158,17 @@ fdescribe(`Cache Manager`, () => {
     const chosenAlbums = sut.getChosenAlbums();
     expect(chosenAlbums.length).toEqual(1);
   });
+
+  describe('localStorage Integration', () => {
+    it('should store the searched item into the localStorage', () => {
+      sut.setOption('useLocalstorage', true);
+
+      const item = {search: 'album-name', type: 'album', response: {}};
+      sut.storeItem(item);
+
+      const history = sut.getHistory();
+
+      expect(history.length).toEqual(1);
+    })
+  })
 });
