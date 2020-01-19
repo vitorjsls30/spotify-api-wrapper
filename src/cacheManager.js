@@ -3,16 +3,20 @@ let history = [];
 let choices = [];
 
 class cacheManager{
-  constructor() {
-    history = [];
-    this.historySize = 10;
-    this.chosenSize = 10;
-    this.useLocalstorage = false;
+  constructor(options={}) {
+    const { historySize, chosenSize, useLocalstorage } = options;
+    this.historySize = historySize || 10;
+    this.chosenSize = chosenSize || 10;
+    this.useLocalstorage = useLocalstorage || false;
+
+    if(this._checkLocalStorage()) {
+      history = JSON.parse(localStorage.getItem('history')) || [];
+    }
   }
 
-  static getInstance() {
+  static getInstance(options) {
     if(!cacheManagerInstance) {
-      cacheManagerInstance = new cacheManager();
+      cacheManagerInstance = new cacheManager(options);
     }
     return cacheManagerInstance;
   }
@@ -27,19 +31,21 @@ class cacheManager{
     }
     const {search, type, response} = item;
 
-    if(this.useLocalstorage) {
-      // Store history item into localStorage...
-      console.log('not implemented yet =z...');
-    } else {
-      history.splice(0, 0, {search, type, response});
-    }
+    history.splice(0, 0, {search, type, response});
 
+    if(this.useLocalstorage) {
+      localStorage.setItem('history', JSON.stringify(history));
+    }
   }
 
   _checkIteminChoices(choice) {
     return choices.find((item) => {
       return item.id == choice.id;
     });
+  }
+
+  _checkLocalStorage() {
+    return window.localStorage && this.useLocalstorage;
   }
 
   storeChoice(choice) {
@@ -81,6 +87,7 @@ class cacheManager{
   }
 
   cleanHistory() {
+    localStorage.removeItem('history');
     history = [];
   }
 

@@ -33,7 +33,9 @@ describe(`Cache Manager`, () => {
     sut.cleanHistory();
 
     const history = sut.getHistory();
+    const localStorageHistory = JSON.parse(localStorage.getItem('history'));
     expect(history.length).toEqual(0);
+    expect(localStorageHistory).toBeNull();
   });
 
 
@@ -166,7 +168,7 @@ describe(`Cache Manager`, () => {
       const item = {search: 'album-name', type: 'album', response: {}};
       sut.storeItem(item);
 
-      const history = sut.getHistory();
+      const history = JSON.parse(localStorage.getItem('history'));
 
       expect(history.length).toEqual(1);
     })
