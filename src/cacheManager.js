@@ -11,6 +11,7 @@ class cacheManager{
 
     if(this._checkLocalStorage()) {
       history = JSON.parse(localStorage.getItem('history')) || [];
+      choices = JSON.parse(localStorage.getItem('choices')) || [];
     }
   }
 
@@ -33,7 +34,7 @@ class cacheManager{
 
     history.splice(0, 0, {search, type, response});
 
-    if(this.useLocalstorage) {
+    if(this._checkLocalStorage()) {
       localStorage.setItem('history', JSON.stringify(history));
     }
   }
@@ -59,6 +60,10 @@ class cacheManager{
 
     const {search, name, id, type} = choice;
     choices.splice(0, 0, {search, name, id, type});
+
+    if(this._checkLocalStorage()) {
+      localStorage.setItem('choices', JSON.stringify(choices));
+    }
   }
 
   getCachedData(query) {
@@ -92,6 +97,7 @@ class cacheManager{
   }
 
   cleanChoices() {
+    localStorage.removeItem('choices');
     choices = [];
   }
 }

@@ -30,6 +30,7 @@ describe(`Cache Manager`, () => {
   });
 
   it('should clean the searched history', () => {
+    localStorage.setItem('history', JSON.stringify([{search: 'searched_item'}]));
     sut.cleanHistory();
 
     const history = sut.getHistory();
@@ -76,11 +77,14 @@ describe(`Cache Manager`, () => {
   });
 
   it('should clean the chosen Albuns', () => {
-    sut.storeChoice(choice);
+    localStorage.setItem('choices', JSON.stringify([{name: 'chosen_item'}]));
     sut.cleanChoices();
+
     const chosenAlbuns = sut.getChosenAlbums();
+    const localStorageChosen = JSON.parse(localStorage.getItem('choices'));
 
     expect(chosenAlbuns.length).toEqual(0);
+    expect(localStorageChosen).toBeNull();
   });
 
   it('should store the album chosen by the user', () => {
@@ -162,15 +166,23 @@ describe(`Cache Manager`, () => {
   });
 
   describe('localStorage Integration', () => {
-    it('should store the searched item into the localStorage', () => {
-      sut.setOption('useLocalstorage', true);
+    it('should restore an item from the localStorage into the instance', () => {
+      localStorage.setItem('history', JSON.stringify([{search: 'previous_search'}]));
+      const sut2 = new cacheManager({useLocalstorage: true});
 
-      const item = {search: 'album-name', type: 'album', response: {}};
-      sut.storeItem(item);
+      const item = sut2.getHistory();
+      expect(item.length).toEqual(1);
+      expect(item[0].search).toEqual('previous_search');
+    });
 
-      const history = JSON.parse(localStorage.getItem('history'));
+    it('should restore a choice from the localStorage into the instance', () => {
+      localStorage.setItem('choices', JSON.stringify([{name: 'chosen_album'}]));
+      const sut3 = new cacheManager({useLocalstorage: true});
 
-      expect(history.length).toEqual(1);
-    })
+      const choice = sut3.getChosenAlbums();
+      expect(choice.length).toEqual(1);
+      expect(choice[0].name).toEqual('chosen_album');
+    });
+
   })
 });
