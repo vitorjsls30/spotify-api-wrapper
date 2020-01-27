@@ -83,6 +83,8 @@ In the following **Methods** Section more details can be found related with the 
 Another feature is the **cacheManager** Module. With this is possible to cache the latest performed searchs and also the items chose by the user in your implementation. After performing a **search** operation, the query used is automatically stored at the search history alongside with it's response, if any, from the spotify API.
 User choices among the returned items can also be stored and they also contain related information like which query term was used, the item name itself and so on. Check the **Methods** section to see related information about the available methods.
 
+From version 1.1.0 an integration with the "localstorage" WebApi was introduced, so that the user can keep his search history for later usage.
+
 ### Main Functionality
 When you perform a search using the **"search.query"** method two operations takes place:
 1. Before the request is sent to the Spotify API, the current access token retrieved previously has it's expiration period checked, if so, the user is automatically redirected to the Spotify API Authorization Page and a new permission will be requested.
@@ -185,8 +187,10 @@ spotify.album.getTracks('4aawyAB9vmqN3uQ7FjRGTy')
 |`option_name`   |*string* | 'historySize', 'chosenSize'|
 
 **Options Available**
+#### Obs: This options can be informed in the Wrapper creation
 * **historySize**: Sets the maximum size of the list that stores the searched items
 * **chosenSize**: Sets the maximum size of the list that stores the items chosen by the user
+* **useLocalStorage**: Enables the wrapper to storage the cached data into the Browser LocalStorage
 
 **Example**
 ```js
