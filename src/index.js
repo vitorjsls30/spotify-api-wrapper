@@ -5,12 +5,14 @@ import cacheManager from './cacheManager';
 
 class spotifyApiWrapper {
   constructor(options) {
-    this.clientId = options.clientId;
-    this.redirectUri = options.redirectUri;
+    const { clientId, redirectUri } = options;
+    this.clientId = clientId;
+    this.redirectUri = redirectUri;
 
     this.session = sessionManager.getInstance();
     this.session.setAppInfo(options);
-    this.cache = cacheManager.getInstance();
+    const { historySize, chosenSize, useLocalStorage } = options;
+    this.cache = cacheManager.getInstance({historySize, chosenSize, useLocalStorage});
 
     this.album = album();
     this.search = search();
