@@ -2,7 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/vitorjsls30/spotify-api-wrapper.svg?style=svg)](https://circleci.com/gh/vitorjsls30/spotify-api-wrapper)
 
-[![Coverage Status](https://coveralls.io/repos/github/vitorjsls30/spotify-api-wrapper/badge.svg?branch=spw-03)](https://coveralls.io/github/vitorjsls30/spotify-api-wrapper?branch=spw-03)
+[![Coverage Status](https://coveralls.io/repos/github/vitorjsls30/spotify-api-wrapper/badge.svg?branch=master)](https://coveralls.io/github/vitorjsls30/spotify-api-wrapper?branch=master)
 
 A Wrapper to work with the Spotidy Web API (https://developer.spotify.com/documentation/web-api/)
 
