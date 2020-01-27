@@ -4,10 +4,10 @@ let choices = [];
 
 class cacheManager{
   constructor(options={}) {
-    const { historySize, chosenSize, useLocalstorage } = options;
+    const { historySize, chosenSize, useLocalStorage } = options;
     this.historySize = historySize || 10;
     this.chosenSize = chosenSize || 10;
-    this.useLocalstorage = useLocalstorage || false;
+    this.useLocalStorage = useLocalStorage || false;
 
     if(this._checkLocalStorage()) {
       history = JSON.parse(localStorage.getItem('history')) || [];
@@ -46,7 +46,7 @@ class cacheManager{
   }
 
   _checkLocalStorage() {
-    return window.localStorage && this.useLocalstorage;
+    return window.localStorage && this.useLocalStorage;
   }
 
   storeChoice(choice) {

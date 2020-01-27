@@ -168,7 +168,7 @@ describe(`Cache Manager`, () => {
   describe('localStorage Integration', () => {
     it('should restore an item from the localStorage into the instance', () => {
       localStorage.setItem('history', JSON.stringify([{search: 'previous_search'}]));
-      const sut2 = new cacheManager({useLocalstorage: true});
+      const sut2 = new cacheManager({useLocalStorage: true});
 
       const item = sut2.getHistory();
       expect(item.length).toEqual(1);
@@ -177,7 +177,7 @@ describe(`Cache Manager`, () => {
 
     it('should restore a choice from the localStorage into the instance', () => {
       localStorage.setItem('choices', JSON.stringify([{name: 'chosen_album'}]));
-      const sut3 = new cacheManager({useLocalstorage: true});
+      const sut3 = new cacheManager({useLocalStorage: true});
 
       const choice = sut3.getChosenAlbums();
       expect(choice.length).toEqual(1);
