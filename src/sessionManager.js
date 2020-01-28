@@ -44,7 +44,7 @@ class sessionManager {
   };
 
   checkTokenExpiration() {
-    return Date.now() - oAuthState.received_at > oAuthState.expires_in;
+    return Math.floor((Date.now() - oAuthState.received_at) / 1000) > oAuthState.expires_in;
   }
 
   reduceParameters(acc, curr) {
