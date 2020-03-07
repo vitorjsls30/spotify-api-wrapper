@@ -67,4 +67,18 @@ describe('OAUTH', () => {
     }, 2000);
   });
 
-});
+  it('should store the current access token', () => {
+    window.location.hash = `#access_token=MOCKED-TOKEN&token_type=Bearer&expires_in=1&state=123`;
+    sut.getUriParams();
+
+    const previousToken = JSON.parse(localStorage.getItem('vs-tkn'));
+    expect(previousToken).toBeDefined();
+    expect(previousToken).toHaveProperty('access_token');
+    expect(previousToken).toHaveProperty('expires_in');
+    expect(previousToken).toHaveProperty('received_at');
+    expect(previousToken.access_token).toBe('MOCKED-TOKEN');
+    expect(previousToken.expires_in).toBe(1);
+    expect(typeof previousToken.received_at).toBe('number');
+  });
+
+});3

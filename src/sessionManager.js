@@ -33,7 +33,6 @@ class sessionManager {
 
   setAppInfo(options) {
     const {clientId, redirectUri} = options;
-
     oAuthState.clientId = clientId;
     oAuthState.redirectUri = redirectUri;
     query_parameters = `client_id=${clientId}&response_type=token&redirect_uri=${redirectUri}&state=123`;
@@ -69,6 +68,15 @@ class sessionManager {
           expires_in: Number(response_parameters.expires_in) || 0,
           received_at: Date.now(),
           state: response_parameters.state || '',
+        }
+
+        if(window.localStorage) {
+          const currentSession = {
+            access_token: oAuthState.access_token,
+            expires_in: oAuthState.expires_in,
+            received_at: oAuthState.received_at
+          };
+          localStorage.setItem('vs-tkn', JSON.stringify(currentSession));
         }
       }
     }
