@@ -12,11 +12,7 @@ function search() {
         currentSession.authorize();
         return;
       }
-      return request(`${API_URL}/search?q=${query}&type=${type}`)
-        .then(data => {
-          currentCache.storeItem({search: query, type, response: data || {}});
-          return data;
-        });
+      return request(`${API_URL}/search?q=${query}&type=${type}`);
     }
   };
 };

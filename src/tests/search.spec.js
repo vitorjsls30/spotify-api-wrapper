@@ -19,7 +19,7 @@ const mockFetchPromise = Promise.resolve({
 });
 
 beforeEach(() => {
-  window.location.hash = `#access_token=${mocked_access_token}&token_type=Bearer&expires_in=3600&state=123`;
+  window.location.hash = `#access_token=${mocked_access_token}&token_type=Bearer&expires_in=1&state=123`;
   sut.session.getUriParams();
   jest.spyOn(global, 'fetch').mockImplementation(() => mockFetchPromise);
 })

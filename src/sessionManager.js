@@ -5,8 +5,8 @@ let query_parameters = null;
 let oAuthState = {
   access_token: '',
   token_type: '',
-  expires_in: '',
-  received_at: '',
+  expires_in: 0,
+  received_at: 0,
   state: '',
   error: ''
 };
@@ -33,7 +33,6 @@ class sessionManager {
 
   setAppInfo(options) {
     const {clientId, redirectUri} = options;
-
     oAuthState.clientId = clientId;
     oAuthState.redirectUri = redirectUri;
     query_parameters = `client_id=${clientId}&response_type=token&redirect_uri=${redirectUri}&state=123`;
@@ -44,6 +43,14 @@ class sessionManager {
   };
 
   checkTokenExpiration() {
+    if(window.localStorage) {
+      const previousSession = JSON.parse(localStorage.getItem('vs-tkn'));
+      if(previousSession) {
+        this.setoAuthState('access_token', previousSession.access_token);
+        this.setoAuthState('expires_in', previousSession.expires_in);
+        this.setoAuthState('received_at', previousSession.received_at);
+      }
+    }
     return Math.floor((Date.now() - oAuthState.received_at) / 1000) > oAuthState.expires_in;
   }
 
@@ -69,6 +76,15 @@ class sessionManager {
           expires_in: Number(response_parameters.expires_in) || 0,
           received_at: Date.now(),
           state: response_parameters.state || '',
+        }
+
+        if(window.localStorage) {
+          const currentSession = {
+            access_token: oAuthState.access_token,
+            expires_in: oAuthState.expires_in,
+            received_at: oAuthState.received_at
+          };
+          localStorage.setItem('vs-tkn', JSON.stringify(currentSession));
         }
       }
     }

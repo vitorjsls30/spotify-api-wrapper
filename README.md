@@ -66,24 +66,28 @@ const spotify = new spotifyApiWrapper({
 const albums = spotify.search.query('U2', 'album');
 ```
 ## Session Management
-To perform requests to the spotify API Endpoints an Access Token must be provided and to facilitate this process the Wrapper has a module responsible for dealing with this. The **sessionManager** Module offers a group of methods that can be used to not only request authentication but also parse the necessary response parameters provided by the spotify API.
+To perform requests to the spotify API Endpoints an Access Token must be provided and to facilitate this process the Wrapper has a module responsible for dealing with this. 
+The **sessionManager** Module offers a group of methods that can be used to not only request authentication but also parse the necessary response parameters provided by the spotify API.
 The authentication mode adopted was the **Implicit Grant Flow**. More information can be found at: (https://developer.spotify.com/documentation/general/guides/authorization-guide/#implicit-grant-flow).
 
 ### Main Functionality
 Before you can request any information from the Spotify API an Access Token is required and to obtain one, the user must grant access to his information through the Spotify API OAuth Authentication Flow. As the Access Token is received it is stored by the wrapper and used in future requests alongside with it's expiration period. After it expires, another token must be provided.
 The following steps must be met before any request to the API is made:
-* Request the user authorization (**session.authorize()** method)
+* Check if the the Token (If any) has already expired (**session.checkTokenExpiration()** method)
+* Request the user authorization if so (**session.authorize()** method)
 * Parse the received hash parameters after the Spotify API Authorization redirects the user back to your application (**session.getUriParams()** method)
 
 After these two steps, the requests can be made to the Spotify API using the provided methods.
 In the following **Methods** Section more details can be found related with the **sessionManager** available methods.
+> *From version 1.2.1 the current access token is stored at the user localStorage for later usage, therefore preventing the user of being prompted by the Spotify API every page reload*
 
 
 ## Cache Management
 Another feature is the **cacheManager** Module. With this is possible to cache the latest performed searchs and also the items chose by the user in your implementation. After performing a **search** operation, the query used is automatically stored at the search history alongside with it's response, if any, from the spotify API.
 User choices among the returned items can also be stored and they also contain related information like which query term was used, the item name itself and so on. Check the **Methods** section to see related information about the available methods.
 
-From version 1.1.0 an integration with the "localstorage" WebApi was introduced, so that the user can keep his search history for later usage.
+> *. From version 1.1.0 an integration with the "localstorage" WebApi was introduced, so that the user can keep his search history for later usage.*
+> *. At version 1.2.1 we no longer automatically stores the last term of a performed query. This way the developer can store the term at the moment that suits him better, enhancing debounce techniques and data flow.*
 
 ### Main Functionality
 When you perform a search using the **"search.query"** method two operations takes place:
