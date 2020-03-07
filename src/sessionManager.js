@@ -5,8 +5,8 @@ let query_parameters = null;
 let oAuthState = {
   access_token: '',
   token_type: '',
-  expires_in: '',
-  received_at: '',
+  expires_in: 0,
+  received_at: 0,
   state: '',
   error: ''
 };
@@ -43,6 +43,14 @@ class sessionManager {
   };
 
   checkTokenExpiration() {
+    if(window.localStorage) {
+      const previousSession = JSON.parse(localStorage.getItem('vs-tkn'));
+      if(previousSession) {
+        this.setoAuthState('access_token', previousSession.access_token);
+        this.setoAuthState('expires_in', previousSession.expires_in);
+        this.setoAuthState('received_at', previousSession.received_at);
+      }
+    }
     return Math.floor((Date.now() - oAuthState.received_at) / 1000) > oAuthState.expires_in;
   }
 
